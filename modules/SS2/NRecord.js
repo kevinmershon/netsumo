@@ -13,7 +13,9 @@ module.exports = class NRecord {
   }
 
   create(options) {
-    return new Record(options);
+    const newRec = new Record(options);
+    this.addRecord(newRec);
+    return newRec;
   }
 
   load(options) {
