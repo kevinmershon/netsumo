@@ -1,3 +1,5 @@
+const Sublist = require('./Sublist');
+
 module.exports = class Record {
 
   constructor(options) {
@@ -20,7 +22,16 @@ module.exports = class Record {
 
   _populateSublists(options) {
     if(options.sublists) {
-      this.sublists = options.sublists;
+      var sublistIds = Object.keys(options.sublists);
+      for (var i=0; i<sublistIds.length; i++) {
+        const sublistId = sublistIds[i];
+        const lines = options.sublists[sublistId];
+
+        options.lines = lines;
+        const newSublist = new Sublist(options);
+
+        this.sublists[sublistId] = newSublist;
+      }
     }
   }
 
@@ -118,23 +129,17 @@ module.exports = class Record {
     }
 
     const line = this.currentLines[sublistId];
-    this.sublists[sublistId][line][fieldId] = value
+    this.sublists[sublistId].setSublistValue(options);
   }
 
   setSublistValue(options){
     const sublistId = options.sublistId;
-    const fieldId = options.fieldId;
-    const value = options.value;
-    const line = options.line;
-
-    this.sublists[sublistId][line][fieldId] = value
+    this.sublists[sublistId].setSublistValue(options);
   }
 
   getSublistValue(options){
     const sublistId = options.sublistId;
-    const index = options.line;
-    const field = options.fieldId;
-    return this.sublists[sublistId] ? this.sublists[sublistId][index][field] : undefined
+    return this.sublists[sublistId].getSublistValue(options);
   }
 
   cancelLine(options) {}

@@ -9,6 +9,7 @@ exports.nsLoader = nsLoader
 
 //SuiteScript 2.0
 exports.loadSuiteScriptModule = require("./modules/SS2/loadSuiteScriptModule")
+exports.NServerWidget = require("./modules/SS2/NServerWidget")
 exports.NLog = require("./modules/SS2/NLog")
 exports.NSearch = require("./modules/SS2/NSearch")
 exports.NRecord = require("./modules/SS2/NRecord")
