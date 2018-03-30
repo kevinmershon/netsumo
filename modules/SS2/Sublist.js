@@ -13,9 +13,14 @@ module.exports = class Sublist {
       this._addLines(options.lines);
     }
   }
+  addNewLine() {
+    this.vals.push({});
+    this.lineCount++;
+  }
 
   _addLines(lines) {
     this.vals = lines;
+    this.lineCount = lines.length;
   }
 
   addField(options) {
@@ -36,6 +41,10 @@ module.exports = class Sublist {
     const fieldId = options.fieldId;
     const value = options.value;
     const line = options.line;
+
+    while (this.vals.length <= line) {
+      this.vals.push({});
+    }
 
     this.vals[line][fieldId] = value;
   }

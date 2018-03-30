@@ -7,6 +7,7 @@ module.exports = class Record {
     this.isDynamic = options.isDynamic;
     this.type = options.type;
     this.currentLines = {};
+    this.sublists = {};
 
     this._populateDefaultValues(options);
     this._populateSubrecords(options);
@@ -30,6 +31,7 @@ module.exports = class Record {
         options.lines = lines;
         const newSublist = new Sublist(options);
 
+        this.currentLines[sublistId] = 0;
         this.sublists[sublistId] = newSublist;
       }
     }
@@ -92,24 +94,17 @@ module.exports = class Record {
   getLineCount(options){
     const sublistId = options.sublistId;
 
-    if(!this.sublists) {
-      return 0;
-    }
-
     return this.sublists[sublistId] ? this.sublists[sublistId].length : 0
   }
 
   selectNewLine(options){
     const sublistId = options.sublistId;
-    if(!this.sublists) {
-      this.sublists = {};
-      this.sublists[sublistId] = [{}];
-      this.currentLines[sublistId] = 0;
-    } else if(!this.sublists[sublistId]) {
-      this.sublists[sublistId] = [{}];
+    if (!this.sublists[sublistId]) {
+      this.sublists[sublistId] = new Sublist({});
       this.currentLines[sublistId] = 0;
     } else {
-      this.currentLines[sublistId] = (this.sublists[sublistId].push({})) - 1
+      this.currentLines[sublistId]++;
+      this.sublists[sublistId].addNewLine();
     }
   }
 
@@ -117,6 +112,16 @@ module.exports = class Record {
     const sublistId = options.sublistId;
     const line = options.line;
     this.currentLines[sublistId] = line;
+  }
+
+  getCurrentSublistValue(options){
+    const sublistId = options.sublistId;
+    options.line = this.currentLines[sublistId];
+    if (this.sublists[sublistId]) {
+      return this.sublists[sublistId].getSublistValue(options);
+    } else {
+      return undefined;
+    }
   }
 
   setCurrentSublistValue(options){
@@ -128,12 +133,20 @@ module.exports = class Record {
       throw Error("No sublist line selected for: "+sublistId)
     }
 
-    const line = this.currentLines[sublistId];
+    if (!this.sublists[sublistId]) {
+      this.sublists[sublistId] = new Sublist({});
+      this.currentLines[sublistId] = 0;
+    }
+    options.line = this.currentLines[sublistId];
     this.sublists[sublistId].setSublistValue(options);
   }
 
   setSublistValue(options){
     const sublistId = options.sublistId;
+    if (!this.sublists[sublistId]) {
+      this.sublists[sublistId] = new Sublist({});
+      this.currentLines[sublistId] = 0;
+    }
     this.sublists[sublistId].setSublistValue(options);
   }
 
@@ -151,7 +164,6 @@ module.exports = class Record {
   getCurrentSublistIndex(options){}
   getCurrentSublistSubrecord(options){}
   getCurrentSublistText(options){}
-  getCurrentSublistValue(options){}
   getField(options){}
   getFields(){}
   getMatrixHeaderCount(options){}

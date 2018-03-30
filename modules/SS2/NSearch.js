@@ -68,16 +68,22 @@ module.exports = class NSearch {
   newSearch() {
     const _self = this;
 
+    const cols = [];
     return {
       id: Math.floor(Math.random() * 10000),
-      columns: [],
+      columns: cols,
       filters: [],
       run: function() {
         return {
-          length: _self.records.length,
+          columns: cols, // allow for re-referencing the columns
           each: function(callback) {
             for (var i=0; i<_self.records.length; i++) {
-              callback(_self.records[i]);
+              if (callback(_self.records[i]) !== true) {
+                // XXX
+                // NetSuite only continues iteration if every iteration within
+                // each() returns true
+                break;
+              }
             }
           }
         };
@@ -102,7 +108,7 @@ module.exports = class NSearch {
     return search;
   }
 
-  createFilter(opts) { return {}; }
-  createColumn(opts) { return {}; }
+  createFilter(opts) { return opts; }
+  createColumn(opts) { return opts; }
 
 }
