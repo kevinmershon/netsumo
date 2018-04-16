@@ -3,7 +3,7 @@ module.exports = class NSearch {
     this.Type = {
       CUSTOMER:       'customer',
       ITEM:           'item',
-      LOCATION:       'location'
+      LOCATION:       'location',
       PURCHASE_ORDER: 'purchaseorder',
       SALES_ORDER:    'salesorder',
       TRANSFER_ORDER: 'transferorder'
