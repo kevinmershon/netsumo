@@ -14,6 +14,14 @@ module.exports = class NSearch {
       DESC: 'desc',
       NONE: 'none'
     };
+    this.Summary = {
+      AVG:   'avg',
+      COUNT: 'count',
+      GROUP: 'group',
+      MAX:   'max',
+      MIN:   'min',
+      SUM:   'sum'
+    };
     this.Operator = {
       AFTER:                   'after',
       ALLOF:                   'allof',
