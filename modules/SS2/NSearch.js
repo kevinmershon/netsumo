@@ -1,10 +1,19 @@
 module.exports = class NSearch {
   constructor() {
     this.Type = {
-      CUSTOMER:"customer",
-      ITEM:"item",
-      LOCATION:"location"
-    }
+      CUSTOMER:       'customer',
+      ITEM:           'item',
+      LOCATION:       'location'
+      PURCHASE_ORDER: 'purchaseorder',
+      SALES_ORDER:    'salesorder',
+      TRANSFER_ORDER: 'transferorder'
+      // TODO -- add more as needed
+    };
+    this.Sort = {
+      ASC:  'asc',
+      DESC: 'desc',
+      NONE: 'none'
+    };
     this.Operator = {
       AFTER:                   'after',
       ALLOF:                   'allof',
@@ -44,7 +53,7 @@ module.exports = class NSearch {
       ONORBEFORE:              'onorbefore',
       STARTSWITH:              'startswith',
       WITHIN:                  'within'
-    }
+    };
     this.records = [];
   }
 
