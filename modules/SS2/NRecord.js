@@ -4,10 +4,11 @@ module.exports = class NRecord {
   constructor() {
     this.Record = Record;
     this.Type = {
-      ITEM_FULFILLMENT:"itemfulfillment",
-      CUSTOMER:"customer",
-      ITEM:"item",
-      LOCATION:"location"
+      CUSTOMER:              'customer',
+      ITEM:                  'item',
+      ITEM_FULFILLMENT:      'itemfulfillment',
+      LOCATION:              'location',
+      MANUFACTURING_ROUTING: 'manufacturingrouting'
     }
     this.records = [];
   }

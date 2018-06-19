@@ -94,7 +94,7 @@ module.exports = class Record {
   getLineCount(options){
     const sublistId = options.sublistId;
 
-    return this.sublists[sublistId] ? this.sublists[sublistId].length : 0
+    return this.sublists[sublistId] ? this.sublists[sublistId].vals.length : 0
   }
 
   selectNewLine(options){
