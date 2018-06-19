@@ -71,7 +71,13 @@ module.exports = class NSearch {
     if(records && records.length > 0) {
       var record = records[0];
       for(let column of data.columns) {
-          response[column] = record.getValue(column)
+        if (!response[column]) {
+          response[column] = [];
+        }
+        response[column].push({
+          value: record.getValue(column),
+          text:  record.getText(column)
+        })
       }
     }
 

@@ -57,9 +57,14 @@ module.exports = class Record {
   }
 
   getValue(options){
-    if( typeof options === 'string' || options instanceof String ) {
+    if( typeof options === 'string' || options instanceof String ||
+        typeof options === 'number' || options instanceof Number) {
       if(this[options]) {
         return this[options].value;
+      }
+    } else {
+      if (typeof options === 'object') {
+        return this[options.fieldId].value;
       }
     }
   }
