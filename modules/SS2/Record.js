@@ -60,11 +60,21 @@ module.exports = class Record {
     if( typeof options === 'string' || options instanceof String ||
         typeof options === 'number' || options instanceof Number) {
       if(this[options]) {
-        return this[options].value;
+        var result = this[options];
+        if (result) {
+          return result.value;
+        } else {
+          return null;
+        }
       }
     } else {
       if (typeof options === 'object') {
-        return this[options.fieldId].value;
+        var result = this[options.fieldId];
+        if (result) {
+          return result.value;
+        } else {
+          return null;
+        }
       }
     }
   }
