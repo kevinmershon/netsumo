@@ -33,7 +33,12 @@ module.exports = class Sublist {
     const sublistId = options.sublistId;
     const line = options.line;
     const field = options.fieldId;
-    return this.vals[line][field];
+    var result = this.vals;
+    if (result[line] && result[line][field]) {
+      return result[line][field];
+    } else {
+      return null;
+    }
   }
 
   setSublistValue(options) {
