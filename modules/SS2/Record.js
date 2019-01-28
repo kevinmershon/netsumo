@@ -31,7 +31,7 @@ module.exports = class Record {
         options.lines = lines;
         const newSublist = new Sublist(options);
 
-        this.currentLines[sublistId] = 0;
+        this.currentLines[sublistId] = lines.length-1;
         this.sublists[sublistId] = newSublist;
       }
     }
